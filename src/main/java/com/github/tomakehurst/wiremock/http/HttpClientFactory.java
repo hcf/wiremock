@@ -21,7 +21,7 @@ import org.apache.http.HttpHost;
 import org.apache.http.client.methods.*;
 import org.apache.http.config.SocketConfig;
 import org.apache.http.conn.ssl.AllowAllHostnameVerifier;
-import org.apache.http.conn.ssl.SSLContexts;
+import org.apache.http.ssl.SSLContexts;
 import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
 import org.apache.http.conn.ssl.TrustStrategy;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -62,9 +62,9 @@ public class HttpClientFactory {
         }
 
         if (trustStoreSettings != NO_STORE) {
-            builder.setSslcontext(buildSSLContextWithTrustStore(trustStoreSettings));
+            builder.setSSLContext(buildSSLContextWithTrustStore(trustStoreSettings));
         } else {
-            builder.setSslcontext(buildAllowAnythingSSLContext());
+            builder.setSSLContext(buildAllowAnythingSSLContext());
         }
 
         return builder.build();
@@ -76,7 +76,6 @@ public class HttpClientFactory {
             return SSLContexts.custom()
                     .loadTrustMaterial(null, new TrustSelfSignedStrategy())
                     .loadKeyMaterial(trustStore, trustStoreSettings.password().toCharArray())
-                    .useTLS()
                     .build();
         } catch (Exception e) {
             return throwUnchecked(e, SSLContext.class);

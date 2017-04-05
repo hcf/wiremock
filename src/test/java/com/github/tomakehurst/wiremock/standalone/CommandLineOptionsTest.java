@@ -17,6 +17,7 @@ package com.github.tomakehurst.wiremock.standalone;
 
 import com.github.tomakehurst.wiremock.common.FileSource;
 import com.github.tomakehurst.wiremock.common.ProxySettings;
+import com.github.tomakehurst.wiremock.core.Options;
 import com.github.tomakehurst.wiremock.extension.Parameters;
 import com.github.tomakehurst.wiremock.extension.ResponseDefinitionTransformer;
 import com.github.tomakehurst.wiremock.extension.responsetemplating.ResponseTemplateTransformer;
@@ -223,7 +224,7 @@ public class CommandLineOptionsTest {
     @Test
     public void defaultsContainerThreadsTo10() {
         CommandLineOptions options = new CommandLineOptions();
-        assertThat(options.containerThreads(), is(10));
+        assertThat(options.containerThreads(), is(Options.DEFAULT_CONTAINER_THREADS));
     }
 
     @Test

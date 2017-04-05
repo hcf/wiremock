@@ -25,12 +25,9 @@ import javax.net.ssl.*;
  */
 public class CustomizedSslContextFactory extends org.eclipse.jetty.util.ssl.SslContextFactory  {
 
-
-
     public void customize(SSLEngine sslEngine)
     {
         SSLParameters sslParams = sslEngine.getSSLParameters();
-        // sslParams.setEndpointIdentificationAlgorithm(_endpointIdentificationAlgorithm);
         sslEngine.setSSLParameters(sslParams);
 
         if (super.getWantClientAuth())
@@ -38,13 +35,8 @@ public class CustomizedSslContextFactory extends org.eclipse.jetty.util.ssl.SslC
         if (super.getNeedClientAuth())
             sslEngine.setNeedClientAuth(super.getNeedClientAuth());
 
-        sslEngine.setEnabledCipherSuites(super.selectCipherSuites(
-                sslEngine.getEnabledCipherSuites(),
-                sslEngine.getSupportedCipherSuites()));
+        super.selectCipherSuites(sslEngine.getEnabledCipherSuites(), sslEngine.getSupportedCipherSuites());
 
-        sslEngine.setEnabledProtocols(super.selectProtocols(sslEngine.getEnabledProtocols(),sslEngine.getSupportedProtocols()));
+        super.selectProtocols(sslEngine.getEnabledProtocols(),sslEngine.getSupportedProtocols());
     }
-
-
-
 }
